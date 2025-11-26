@@ -1,3 +1,5 @@
+"use client";
+
 import { Image } from "@builder.io/react";
 import React from "react";
 
