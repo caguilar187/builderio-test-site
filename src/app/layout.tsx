@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { builder, Builder } from "@builder.io/react";
 import "./globals.css";
+import Hero from "@/components/Hero";
+import HeroCarousel from "@/components/HeroCarousel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,6 +13,100 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Register components with Builder
+builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
+
+Builder.registerComponent(Hero, {
+  name: "Hero",
+  description: "A hero component with image and text overlay",
+  inputs: [
+    {
+      name: "image",
+      type: "file",
+      required: false,
+      allowedFileTypes: ["jpeg", "jpg", "png", "webp"],
+    },
+    {
+      name: "imageMobile",
+      type: "file",
+      required: false,
+      allowedFileTypes: ["jpeg", "jpg", "png", "webp"],
+    },
+    {
+      name: "imageAltText",
+      type: "string",
+      required: false,
+      defaultValue: "Hero image",
+    },
+    {
+      name: "heroCopy",
+      type: "string",
+      required: false,
+      defaultValue: "Hero Title",
+    },
+    {
+      name: "heroSubText",
+      type: "string",
+      required: false,
+      defaultValue: "Hero subtitle",
+    },
+  ],
+});
+
+Builder.registerComponent(HeroCarousel, {
+  name: "HeroCarousel",
+  description: "A carousel component to display multiple heroes",
+  inputs: [
+    {
+      name: "heroes",
+      type: "list",
+      required: false,
+      defaultValue: [],
+      subFields: [
+        {
+          name: "id",
+          type: "string",
+        },
+        {
+          name: "image",
+          type: "file",
+          allowedFileTypes: ["jpeg", "jpg", "png", "webp"],
+        },
+        {
+          name: "imageMobile",
+          type: "file",
+          allowedFileTypes: ["jpeg", "jpg", "png", "webp"],
+        },
+        {
+          name: "imageAltText",
+          type: "string",
+          defaultValue: "Hero image",
+        },
+        {
+          name: "heroCopy",
+          type: "string",
+        },
+        {
+          name: "heroSubText",
+          type: "string",
+        },
+      ],
+    },
+    {
+      name: "autoplay",
+      type: "boolean",
+      required: false,
+      defaultValue: false,
+    },
+    {
+      name: "autoplayInterval",
+      type: "number",
+      required: false,
+      defaultValue: 5000,
+    },
+  ],
 });
 
 export const metadata: Metadata = {
