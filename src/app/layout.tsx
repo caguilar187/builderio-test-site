@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { builder } from "@builder.io/sdk";
 import "./globals.css";
+import BuilderRegistry from "@/components/BuilderRegistry";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +13,9 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Initialize Builder (this is safe to do on the server)
+builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <BuilderRegistry />
         {children}
       </body>
     </html>
